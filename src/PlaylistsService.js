@@ -8,7 +8,7 @@ class PlaylistsService {
 
   async getPlaylists(playlistId) {
     const playlistQuery = {
-      text: `SELECT playlists.id, playlists.name, users.username FROM playlists
+      text: `SELECT playlists.id, playlists.name FROM playlists
       INNER JOIN users ON playlists.owner = users.id
       WHERE playlists.id = $1`,
       values: [playlistId],
@@ -25,7 +25,7 @@ class PlaylistsService {
     const song = await this._pool.query(songQuery);
     const result = {
       ...playlist.rows[0],
-      songs: [song.rows],
+      songs: song.rows,
     };
 
     return result;
